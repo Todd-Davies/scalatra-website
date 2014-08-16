@@ -19,7 +19,7 @@ trait TodddaviesStack extends ScalatraServlet with ScalateSupport {
     engine
   }
   /* end wiring up the precompiled templates */
-  
+
   override protected def templateAttributes(implicit request: HttpServletRequest): mutable.Map[String, Any] = {
     super.templateAttributes ++ mutable.Map.empty // Add extra attributes here, they need bindings in the build file
   }
