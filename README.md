@@ -1,6 +1,8 @@
-# todddavies #
+# todddavies.co.uk #
 
 A little experiment to evaluate the feasibility of migrating my website to a Scala based back end.
+
+Note, this isn't the version of my website that is currently live.
 
 ## Build & Run ##
 

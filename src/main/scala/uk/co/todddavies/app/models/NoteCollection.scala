@@ -35,6 +35,4 @@ class NoteCollection(val name: String, val filename: String,
 object NoteCollection extends Parsable[List[NoteCollection]] {
   implicit def combinator(r: ResultSet, l: List[NoteCollection]): List[NoteCollection] = l :+ new NoteCollection(r)
   implicit val start = List()
-
-  val parseDetails: ((ResultSet, List[NoteCollection]) => List[NoteCollection], List[NoteCollection]) = (combinator, start)
 }

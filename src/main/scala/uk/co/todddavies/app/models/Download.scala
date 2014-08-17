@@ -13,6 +13,4 @@ class Download(val name: String, val count: Int) {
 object Download extends Parsable[List[Download]] {
   implicit def combinator(r: ResultSet, l: List[Download]): List[Download] = l :+ new Download(r)
   implicit val start = List()
-
-  val parseDetails: ((ResultSet, List[Download]) => List[Download], List[Download]) = (combinator, start)
 }
