@@ -5,48 +5,33 @@ import java.sql.{SQLException, ResultSet, Connection}
 import uk.co.todddavies.app.models.NoteCollection
 
 
-case class Server(db: Connection) extends TodddaviesStack with DownloadServer {
+case class Server(db: Connection) extends TodddaviesStack with DownloadServer with HtmlServer with DatabaseInterface {
 
   get("/") {
-    contentType="text/html"
-    ssp("home.ssp")
+    servePage("home.ssp")
   }
 
   get("/notes") {
-    contentType="text/html"
     val resultsSet = db.createStatement().executeQuery("SELECT * from notes")
-    ssp("notes.ssp", "notes" -> parseQuery(resultsSet))
+    servePage("notes.ssp", "notes" -> parseQuery(resultsSet, NoteCollection.combinator, List()))
   }
 
   get("/notes/:tag") {
-    contentType="text/html"
     val resultsSet = db.createStatement().executeQuery("SELECT * from notes")
-    val notes: List[NoteCollection] = parseQuery(resultsSet)
-    ssp("notes.ssp", "notes" -> notes.filter(
+    val notes: List[NoteCollection] = parseQuery(resultsSet, NoteCollection.combinator, List())
+    servePage("notes.ssp", "notes" -> notes.filter(
       x => x.tags.contains(params("tag").toLowerCase)
     ))
   }
 
-  def parseQuery(resultsSet: ResultSet, list: List[NoteCollection] = List()): List[NoteCollection] = resultsSet.next() match {
-    case true  => parseQuery(resultsSet, list :+ new NoteCollection(resultsSet))
-    case false => list
-  }
-
   get("/test") {
-    val out = new StringBuilder()
-    try {
-      // create the statement, and run the select query
-      val statement = db.createStatement()
-      val resultSet = statement.executeQuery("SELECT * FROM downloads")
-      while ( resultSet.next() ) {
-        val name = resultSet.getString("name")
-        val count = resultSet.getInt("count")
-        out.append("name, count = " + name + ", " + count)
-      }
-    } catch {
-      case e: SQLException => e.printStackTrace
+    val resultSet = db.createStatement().executeQuery("SELECT * FROM downloads")
+    def combinator(r: ResultSet, s: StringBuilder): StringBuilder = {
+      val name = r.getString("name")
+      val count = r.getInt("count")
+      s.append("name, count = " + name + ", " + count)
     }
-    out.toString()
+    parseQuery(resultSet, combinator, new StringBuilder()).toString()
   }
 
   get("/downloads/cv.pdf") {

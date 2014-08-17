@@ -22,9 +22,13 @@ class NoteCollection(val name: String, val filename: String, val courseCode: Str
          resultsSet.getString("tags"))
   }
 
-  def getResourcePath(): String = downloadDirectory + filename + ".pdf"
+  def getResourcePath: String = downloadDirectory + filename + ".pdf"
 
-  def getKindleResourcePath(): String = downloadDirectory + filename + "_kindle.pdf"
+  def getKindleResourcePath: String = downloadDirectory + filename + "_kindle.pdf"
 
-  def getFlashcardsResourcePath(): String = downloadDirectory + filename + "_flashcards.pdf"
+  def getFlashcardsResourcePath: String = downloadDirectory + filename + "_flashcards.pdf"
+}
+
+object NoteCollection {
+  def combinator(r: ResultSet, l: List[NoteCollection]): List[NoteCollection] = l :+ new NoteCollection(r)
 }
