@@ -1,7 +1,7 @@
 package uk.co.todddavies.app
 
 import java.io.File
-import java.sql.Connection
+import java.sql.{SQLException, Connection}
 
 trait DownloadServer extends TodddaviesStack {
 
@@ -13,7 +13,7 @@ trait DownloadServer extends TodddaviesStack {
     try {
       db.createStatement().executeUpdate("INSERT INTO downloads (name, count) VALUES (\"" + file.getName + "\", 1) ON DUPLICATE KEY UPDATE count=count + 1")
     } catch {
-      case e => e.printStackTrace
+      case e: SQLException => e.printStackTrace
     }
     file
   }

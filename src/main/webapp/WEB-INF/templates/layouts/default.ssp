@@ -1,0 +1,15 @@
+<%@ var body: String %>
+<%@ var title: String = "Todd Davies" %>
+<%@ var head: String = "" %>
+<html>
+<head>
+  <title>${title}</title>
+  <link href="/stylesheets/base.css" rel="stylesheet" type="text/css">
+  ${unescape(head)}
+</head>
+<body>
+
+  ${unescape(body)}
+
+</body>
+</html>

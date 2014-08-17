@@ -31,20 +31,21 @@ object TodddaviesBuild extends Build {
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       ),
       // For the database
-      libraryDependencies ++= Seq(
+      /*libraryDependencies ++= Seq(
         "com.typesafe.slick" %% "slick" % "2.1.0",
         "com.h2database" % "h2" % "1.3.166",
         "c3p0" % "c3p0" % "0.9.1.2"
-      ),
+      ),*/
       libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.12",
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
           TemplateConfig(
             base / "webapp" / "WEB-INF" / "templates",
             Seq.empty,  /* default imports should be added here */
-            Seq(
+            Seq.empty,  /* add extra bindings here */
+            /*Seq(
               Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
-            ),  /* add extra bindings here */
+            ),  /* add extra bindings here */*/
             Some("templates")
           )
         )

@@ -3,14 +3,12 @@ import uk.co.todddavies.app.Server
 import org.scalatra._
 import javax.servlet.ServletContext
 
-import com.mchange.v2.c3p0.ComboPooledDataSource
 import org.slf4j.LoggerFactory
-import scala.slick.driver.H2Driver.simple._
 
 class ScalatraBootstrap extends LifeCycle {
 
   val driver = "com.mysql.jdbc.Driver"
-  val url = "jdbc:mysql://127.0.0.1:3306/downloads"
+  val url = "jdbc:mysql://127.0.0.1:3306/todddavies"
   val username = "root"
   val password = "think"
 
