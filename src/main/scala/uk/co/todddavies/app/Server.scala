@@ -5,7 +5,7 @@ import java.sql.{SQLException, ResultSet, Connection}
 import uk.co.todddavies.app.models.NoteCollection
 
 
-case class Server(db: Connection) extends TodddaviesStack with DownloadServer with HtmlServer with DatabaseInterface {
+case class Server(db: Connection) extends ToddDaviesStack with DownloadServer with HtmlServer with DatabaseInterface {
 
   get("/") {
     servePage("home.ssp")

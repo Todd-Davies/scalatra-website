@@ -1,5 +1,7 @@
 # todddavies #
 
+A little experiment to evaluate the feasibility of migrating my website to a Scala based back end.
+
 ## Build & Run ##
 
 ```sh

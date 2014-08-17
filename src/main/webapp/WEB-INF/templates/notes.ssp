@@ -4,12 +4,12 @@
 
 #for (i <- notes)
     #if(i.standard)
-        <a href="${i.getResourcePath()}">${i.name}</a>
+        <a href="${i.getResourcePath}">${i.name}</a>
     #end
     #if(i.kindle)
-        <a href="${i.getKindleResourcePath()}">kindle</a>
+        <a href="${i.getKindleResourcePath}">kindle</a>
     #end
     #if(i.flashcards)
-        <a href="${i.getFlashcardsResourcePath()}">flashcards</a>
+        <a href="${i.getFlashcardsResourcePath}">flashcards</a>
     #end
 #end
