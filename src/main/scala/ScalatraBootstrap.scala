@@ -10,7 +10,7 @@ class ScalatraBootstrap extends LifeCycle {
   val driver = "com.mysql.jdbc.Driver"
   val url = "jdbc:mysql://127.0.0.1:3306/todddavies"
   val username = "root"
-  val password = "think"
+  val password = "root"
 
   Class.forName(driver)
   implicit val db: Connection = DriverManager.getConnection(url, username, password)

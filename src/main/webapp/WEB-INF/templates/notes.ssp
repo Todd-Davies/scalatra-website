@@ -2,14 +2,19 @@
 
 <%@ val notes: List[NoteCollection] %>
 
-#for (i <- notes)
-    #if(i.standard)
-        <a href="${i.getResourcePath}">${i.name}</a>
+<ul>
+    #for (i <- notes)
+        <li>
+            ${i.name} -
+            #if(i.getResourcePath.isLeft)
+                <a href="${i.getResourcePath.left.get}">notes</a>
+            #end
+            #if(i.getKindleResourcePath.isLeft)
+                <a href="${i.getKindleResourcePath.left.get}">kindle</a>
+            #end
+            #if(i.getFlashcardsResourcePath.isLeft)
+                <a href="${i.getFlashcardsResourcePath.left.get}">flashcards</a>
+            #end
+        </li>
     #end
-    #if(i.kindle)
-        <a href="${i.getKindleResourcePath}">kindle</a>
-    #end
-    #if(i.flashcards)
-        <a href="${i.getFlashcardsResourcePath}">flashcards</a>
-    #end
-#end
+</ul>

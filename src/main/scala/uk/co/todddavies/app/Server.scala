@@ -1,9 +1,11 @@
 package uk.co.todddavies.app
 
 
-import java.sql.{ResultSet, Connection}
+import java.sql.Connection
 
-
+/**
+ * Defines the endpoints of the app
+ */
 case class Server(implicit db: Connection) extends DownloadServer with HtmlServer with DatabaseInterface {
 
   get("/") {
@@ -25,5 +27,5 @@ case class Server(implicit db: Connection) extends DownloadServer with HtmlServe
     fetchDownloads.map(_.toString()).mkString("\n")
   }
 
-  getFile("/downloads/cv.pdf")
+  getFile("/downloads/cv.pdf", "/home/td/cv/cv.pdf")
 }
