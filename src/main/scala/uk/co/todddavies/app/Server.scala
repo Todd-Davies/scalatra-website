@@ -1,40 +1,29 @@
 package uk.co.todddavies.app
 
 
-import java.sql.{SQLException, ResultSet, Connection}
-import uk.co.todddavies.app.models.NoteCollection
+import java.sql.{ResultSet, Connection}
 
 
-case class Server(db: Connection) extends ToddDaviesStack with DownloadServer with HtmlServer with DatabaseInterface {
+case class Server(implicit db: Connection) extends DownloadServer with HtmlServer with DatabaseInterface {
 
   get("/") {
     servePage("home.ssp")
   }
 
   get("/notes") {
-    val resultsSet = db.createStatement().executeQuery("SELECT * from notes")
-    servePage("notes.ssp", "notes" -> parseQuery(resultsSet, NoteCollection.combinator, List()))
+    val notes = fetchNotes
+    servePage("notes.ssp", "notes" -> notes)
   }
 
   get("/notes/:tag") {
-    val resultsSet = db.createStatement().executeQuery("SELECT * from notes")
-    val notes: List[NoteCollection] = parseQuery(resultsSet, NoteCollection.combinator, List())
-    servePage("notes.ssp", "notes" -> notes.filter(
+    servePage("notes.ssp", "notes" -> fetchNotes.filter(
       x => x.tags.contains(params("tag").toLowerCase)
     ))
   }
 
   get("/test") {
-    val resultSet = db.createStatement().executeQuery("SELECT * FROM downloads")
-    def combinator(r: ResultSet, s: StringBuilder): StringBuilder = {
-      val name = r.getString("name")
-      val count = r.getInt("count")
-      s.append("name, count = " + name + ", " + count)
-    }
-    parseQuery(resultSet, combinator, new StringBuilder()).toString()
+    fetchDownloads.map(_.toString()).mkString("\n")
   }
 
-  get("/downloads/cv.pdf") {
-    serveFile("/home/td/cv/cv.pdf", db)
-  }
+  getFile("/downloads/cv.pdf")
 }

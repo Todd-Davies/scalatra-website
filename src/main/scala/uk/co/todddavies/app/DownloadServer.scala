@@ -5,6 +5,8 @@ import java.sql.{SQLException, Connection}
 
 trait DownloadServer extends ToddDaviesStack {
 
+  def getFile(path: String)(implicit db: Connection) = get(path) { serveFile("/home/td/cv/cv.pdf", db) }
+
   def serveFile(path: String, db: Connection): File = {
     contentType = "application/octet-stream"
     val file = new java.io.File(path)

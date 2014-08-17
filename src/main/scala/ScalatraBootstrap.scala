@@ -13,12 +13,12 @@ class ScalatraBootstrap extends LifeCycle {
   val password = "think"
 
   Class.forName(driver)
-  val db: Connection = DriverManager.getConnection(url, username, password)
+  implicit val db: Connection = DriverManager.getConnection(url, username, password)
 
   val logger = LoggerFactory.getLogger(getClass)
 
   override def init(context: ServletContext) {
-    context.mount(Server(db), "/*")      // mount the application and provide the Database
+    context.mount(Server(), "/*")      // mount the application and provide the Database
   }
 
   private def closeDbConnection() {
@@ -28,6 +28,6 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def destroy(context: ServletContext) {
     super.destroy(context)
-    closeDbConnection
+    closeDbConnection()
   }
 }
